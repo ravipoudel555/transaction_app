@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:centralized_transaction/local_repo/service_preferences.dart';
 import 'package:centralized_transaction/models/credentials.dart';
@@ -31,7 +30,8 @@ class SignInController extends GetxController {
 
   void signIn(BuildContext context) async {
     var body = credentialsToJson(
-        Credentials(email: email.text, password: password.text));
+      Credentials(email: email.text, password: password.text),
+    );
 
     final url = BASE_URL + '/login';
 
@@ -45,6 +45,7 @@ class SignInController extends GetxController {
       await ServicePref().setToken(token);
       await ServicePref().setCitizenship(citizenship);
       await ServicePref().setStatus(true);
+      password.text = "";
       Get.toNamed("/dashboard");
     } else {
       final decoded = jsonDecode(response.body);

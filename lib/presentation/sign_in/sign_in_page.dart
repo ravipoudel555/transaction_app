@@ -6,8 +6,11 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SignInForm(),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: SignInForm(),
+      ),
     );
   }
 }

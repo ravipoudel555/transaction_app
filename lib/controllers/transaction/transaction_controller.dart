@@ -6,9 +6,18 @@ import 'package:centralized_transaction/services/constraints.dart';
 import 'package:centralized_transaction/services/repositories/remote_repository.dart';
 import 'package:get/get.dart';
 
+enum TransactionType {
+  ALL,
+  PSP,
+  BANK,
+}
+
 class TransactionController extends GetxController {
-  List transactionListModel = [].obs();
-  void getTransactionList() async {
+  List<TransactionListModel> transactionListModel =
+      <TransactionListModel>[].obs();
+  var transactionType = TransactionType.ALL.obs();
+  var desc = true.obs();
+  Future<List<TransactionListModel>> getTransactionList() async {
     final url = BASE_URL + "/transaction/list";
 
     final body = {"citizenship": ServicePref().getCitizenship()};
@@ -23,5 +32,32 @@ class TransactionController extends GetxController {
     );
 
     transactionListModel = transactionListModelFromJson(response.body);
+    if (transactionType == TransactionType.PSP) {
+      transactionListModel = transactionListModel
+          .where((transaction) => transaction.from == 'psp')
+          .toList();
+    } else if (transactionType == TransactionType.BANK) {
+      transactionListModel = transactionListModel
+          .where((transaction) => transaction.from == 'bank')
+          .toList();
+    } else {
+      transactionListModel = transactionListModelFromJson(response.body);
+    }
+
+    if (desc) {
+      transactionListModel.sort((b, a) => a.createdAt.compareTo(b.createdAt));
+    } else {
+      transactionListModel.sort((b, a) => b.createdAt.compareTo(a.createdAt));
+    }
+
+    return transactionListModel;
+  }
+
+  getTransactionListStream() async* {
+    while (true) {
+      yield await Future.delayed(Duration(seconds: 3), () {
+        return getTransactionList();
+      });
+    }
   }
 }
