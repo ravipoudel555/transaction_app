@@ -27,9 +27,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: CircularProgressIndicator(),
+    return Scaffold(
+      body: Container(
+        child: Center(
+          child: LinearProgressIndicator(
+            color: Colors.white,
+            backgroundColor: Colors.orange,
+          ),
+        ),
       ),
     );
   }

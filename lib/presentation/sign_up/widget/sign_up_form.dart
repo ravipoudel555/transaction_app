@@ -94,13 +94,22 @@ class _SignUpFormState extends State<SignUpForm> {
             },
           ),
           SizedBox(height: 8),
-          TextButton(
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.all(15),
+              primary: Colors.orange,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 c.signUp(context);
               }
             },
-            child: const Text('SIGN Up'),
+            child: const Text(
+              'SIGN UP',
+            ),
           ),
           SizedBox(height: 8),
           Container(
@@ -113,7 +122,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   child: Text(
                     'Sign In',
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.orange,
                     ),
                   ),
                   onTap: () {

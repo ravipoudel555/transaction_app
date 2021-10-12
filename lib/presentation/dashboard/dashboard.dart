@@ -47,6 +47,8 @@ class _DashboardState extends State<Dashboard> {
                       c.transactionType = TransactionType.PSP;
                     } else if (newValue == 'BANK') {
                       c.transactionType = TransactionType.BANK;
+                    } else if (newValue == 'MONTH') {
+                      c.transactionType = TransactionType.MONTH;
                     } else {
                       c.transactionType = TransactionType.ALL;
                     }
@@ -58,7 +60,7 @@ class _DashboardState extends State<Dashboard> {
                     height: 1,
                     color: Colors.white,
                   ),
-                  items: <String>['All', 'PSP', 'BANK']
+                  items: <String>['All', 'PSP', 'BANK', 'MONTH']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,

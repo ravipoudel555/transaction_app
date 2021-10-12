@@ -1,4 +1,3 @@
-import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:centralized_transaction/controllers/sign_in/sign_in_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,8 +58,15 @@ class _SignInFormState extends State<SignInForm> {
               if (!c.validatePassword()) return "Invalid password";
             },
           ),
-          const SizedBox(height: 8),
-          TextButton(
+          const SizedBox(height: 30),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.all(15),
+              primary: Colors.orange,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 c.signIn(context);
@@ -79,7 +85,7 @@ class _SignInFormState extends State<SignInForm> {
                   child: Text(
                     'Register now',
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.orange,
                     ),
                   ),
                   onTap: () {

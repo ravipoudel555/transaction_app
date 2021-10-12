@@ -23,14 +23,51 @@ class TransactionOverviewBody extends StatelessWidget {
                 child: Text('No transactions'),
               );
             } else {
-              return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    return TransactionCardWidget(
-                      transaction: snapshot.data[index],
-                      index: index,
-                    );
-                  });
+              return Column(
+                children: [
+                  c.transactionType == TransactionType.MONTH
+                      ? Expanded(
+                          child: Card(
+                          margin: EdgeInsets.only(
+                            top: 10,
+                            left: 10,
+                            right: 10,
+                          ),
+                          elevation: 5,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Monthly Expenditure:',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                ' ${c.total}',
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))
+                      : Container(),
+                  Expanded(
+                    flex: 12,
+                    child: ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return TransactionCardWidget(
+                            transaction: snapshot.data[index],
+                            index: index,
+                          );
+                        }),
+                  ),
+                ],
+              );
             }
           }
           return Center(child: CircularProgressIndicator());

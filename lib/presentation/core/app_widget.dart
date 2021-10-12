@@ -20,6 +20,16 @@ class AppWidget extends StatelessWidget {
           backgroundColor: Colors.black,
         ),
         inputDecorationTheme: InputDecorationTheme(
+          focusColor: Color(0xffEE1B2C),
+          labelStyle: TextStyle(
+            color: Colors.grey,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(
+              color: Colors.orange,
+            ),
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
           ),

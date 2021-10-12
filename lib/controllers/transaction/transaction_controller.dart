@@ -10,6 +10,7 @@ enum TransactionType {
   ALL,
   PSP,
   BANK,
+  MONTH,
 }
 
 class TransactionController extends GetxController {
@@ -17,6 +18,7 @@ class TransactionController extends GetxController {
       <TransactionListModel>[].obs();
   var transactionType = TransactionType.ALL.obs();
   var desc = true.obs();
+  var total = 0.obs();
   Future<List<TransactionListModel>> getTransactionList() async {
     final url = BASE_URL + "/transaction/list";
 
@@ -32,13 +34,19 @@ class TransactionController extends GetxController {
     );
 
     transactionListModel = transactionListModelFromJson(response.body);
-    if (transactionType == TransactionType.PSP) {
+
+    if (transactionType == TransactionType.MONTH) {
+      transactionListModel = transactionListModel.where((transaction) {
+        return transaction.createdAt.month == DateTime.now().month;
+      }).toList();
+    } else if (transactionType == TransactionType.PSP) {
       transactionListModel = transactionListModel
-          .where((transaction) => transaction.from == 'psp')
+          .where(
+              (transaction) => transaction.from == 'Payment Service Provider')
           .toList();
     } else if (transactionType == TransactionType.BANK) {
       transactionListModel = transactionListModel
-          .where((transaction) => transaction.from == 'bank')
+          .where((transaction) => transaction.from == 'Bank')
           .toList();
     } else {
       transactionListModel = transactionListModelFromJson(response.body);
@@ -50,6 +58,10 @@ class TransactionController extends GetxController {
       transactionListModel.sort((b, a) => b.createdAt.compareTo(a.createdAt));
     }
 
+    total = 0;
+    for (final transaction in transactionListModel) {
+      total = total + transaction.amount;
+    }
     return transactionListModel;
   }
 
